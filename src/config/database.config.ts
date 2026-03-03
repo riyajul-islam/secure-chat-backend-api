@@ -2,6 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
 import { User } from '../modules/users/entities/user.entity';
 import { Admin } from '../modules/admins/entities/admin.entity';
+import { AdminLoginHistory } from '../modules/admins/entities/admin-login-history.entity';
 import { Banner } from '../modules/banners/entities/banner.entity';
 import { NewsArticle } from '../modules/news/entities/news-article.entity';
 import { Page } from '../modules/pages/entities/page.entity';
@@ -42,6 +43,7 @@ export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptio
   entities: [
     User,
     Admin,
+    AdminLoginHistory,   // নতুন যোগ করা হয়েছে
     Banner,
     NewsArticle,
     Page,

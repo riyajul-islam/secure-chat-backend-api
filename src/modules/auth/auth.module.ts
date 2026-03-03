@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
+import { AdminsModule } from '../admins/admins.module'; // ✅ AdminsModule ইম্পোর্ট করুন
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { Admin } from '../admins/entities/admin.entity';
@@ -14,6 +15,7 @@ import { Admin } from '../admins/entities/admin.entity';
   imports: [
     TypeOrmModule.forFeature([Admin]),
     UsersModule,
+    AdminsModule, // ✅ AdminsModule যোগ করুন
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

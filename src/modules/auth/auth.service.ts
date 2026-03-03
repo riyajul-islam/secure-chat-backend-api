@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
+import { AdminsService } from '../admins/admins.service'; // ✅ ইম্পোর্ট যোগ করুন
 import { Admin } from '../admins/entities/admin.entity';
 import { LoginDto } from './dto/login.dto';
 
@@ -11,6 +12,7 @@ import { LoginDto } from './dto/login.dto';
 export class AuthService {
   constructor(
     private usersService: UsersService,
+    private adminsService: AdminsService, // ✅ Inject AdminsService
     private jwtService: JwtService,
     @InjectRepository(Admin)
     private adminRepository: Repository<Admin>,
@@ -37,7 +39,7 @@ export class AuthService {
     return null;
   }
 
-  async login(loginDto: LoginDto) {
+  async login(loginDto: LoginDto, req?: any) { // ✅ Request object যোগ করুন
     const { email, password, isAdmin = false } = loginDto;
     
     let user: any;
@@ -48,12 +50,24 @@ export class AuthService {
     }
     
     if (!user) {
+      // Failed login attempt record for admin (optional)
+      if (isAdmin && req) {
+        const admin = await this.adminRepository.findOne({ where: { email } });
+        if (admin) {
+          await this.adminsService.recordLogin(admin.id, req, 'failed', 'Invalid password');
+        }
+      }
       throw new UnauthorizedException('Invalid credentials');
     }
 
     // Update last login
     if (isAdmin) {
       await this.adminRepository.update(user.id, { last_login: new Date() });
+      
+      // ✅ Record successful login history
+      if (req) {
+        await this.adminsService.recordLogin(user.id, req, 'success');
+      }
     } else {
       await this.usersService.updateLastLogin(user.id);
     }

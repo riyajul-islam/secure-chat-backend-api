@@ -5,6 +5,7 @@ import { Report } from '../../reports/entities/report.entity';
 import { Announcement } from '../../announcements/entities/announcement.entity';
 import { AuditLog } from '../../audit/entities/audit-log.entity';
 import { NotificationHistory } from '../../notifications/entities/notification-history.entity';
+import { AdminLoginHistory } from './admin-login-history.entity';
 
 @Entity('admins')
 export class Admin {
@@ -61,5 +62,41 @@ export class Admin {
 
     @OneToMany(() => NotificationHistory, notification => notification.sent_by)
     sent_notifications: NotificationHistory[];
+
+
+    @OneToMany(() => AdminLoginHistory, loginHistory => loginHistory.admin)
+    login_history: AdminLoginHistory[];
+    
+
+      // নতুন fields - এভাবে আপডেট করুন
+    @Column({ nullable: true, type: 'timestamp' })
+    last_logout: Date;
+
+    @Column({ default: false })
+    is_locked: boolean;
+
+    @Column({ nullable: true, type: 'text' })
+    lock_reason: string;
+
+    @Column({ nullable: true, type: 'uuid' })
+    locked_by: string;
+
+    @Column({ nullable: true, type: 'timestamp' })
+    lock_expires_at: Date;
+
+    @Column({ nullable: true, type: 'text' })
+    avatar_url: string;
+
+    @Column({ length: 20, nullable: true })
+    phone: string;
+
+    @Column({ length: 100, nullable: true })
+    department: string;
+
+    @Column({ nullable: true, type: 'inet' })
+    last_ip: string;
+
+    @Column({ nullable: true, type: 'text' })
+    last_user_agent: string;
 
 }

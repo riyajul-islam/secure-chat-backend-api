@@ -1,4 +1,4 @@
-import { IsEmail, IsString, MinLength, IsOptional, IsArray, IsIn } from 'class-validator';
+import { IsEmail, IsString, MinLength, IsOptional, IsArray, IsIn, IsBoolean, IsUrl, IsPhoneNumber } from 'class-validator';
 
 export class CreateAdminDto {
   @IsString()
@@ -12,10 +12,26 @@ export class CreateAdminDto {
   password: string;
 
   @IsOptional()
-  @IsIn(['Super Administrator', 'Administrator', 'Regular Administrator'])
+  @IsIn(['Super Administrator', 'Administrator', 'Regular Administrator', 'Moderator', 'Editor'])
   admin_type?: string;
 
   @IsOptional()
   @IsArray()
   permissions?: string[];
+
+  @IsOptional()  // ✅ এইটা থাকতেই হবে
+  @IsString()
+  status?: string;
+
+  @IsOptional()  // ✅ এইটা থাকতেই হবে
+  @IsString()  // যেকোনো দেশের ফোন নম্বর নিবে
+  phone?: string;
+
+  @IsOptional()  // ✅ এইটা থাকতেই হবে
+  @IsString()
+  department?: string;
+
+  @IsOptional()  // ✅ এইটা থাকতেই হবে
+  @IsString()
+  avatar_url?: string;
 }
