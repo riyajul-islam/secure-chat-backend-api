@@ -101,4 +101,14 @@ export class AuthService {
       throw new UnauthorizedException('Invalid token');
     }
   }
+
+  async logout(userId: string, isAdmin: boolean = false) {
+  if (isAdmin) {
+    // Admin-এর logout time আপডেট করুন
+    await this.adminsService.updateLastLogout(userId);
+  }
+  return { message: 'Logged out successfully' };
+}
+
+
 }

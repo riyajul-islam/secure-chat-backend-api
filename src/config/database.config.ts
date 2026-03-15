@@ -30,7 +30,10 @@ import { Report } from '../modules/reports/entities/report.entity';
 import { Notification } from '../modules/notifications/entities/notification.entity';
 import { VerificationPlan } from '../modules/verification/entities/verification-plan.entity';
 import { VerificationRequest } from '../modules/verification/entities/verification-request.entity';
-
+import { AnalyticsEvent } from '../modules/analytics/entities/analytics.entity';
+import { SecurityEvent } from '../modules/analytics/entities/security-event.entity';
+import { ServerMetrics } from '../modules/analytics/entities/server-metrics.entity';
+import { BlockedIP } from '../modules/analytics/entities/blocked-ip.entity';
 
 
 export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptions => ({
@@ -72,6 +75,11 @@ export const databaseConfig = (configService: ConfigService): TypeOrmModuleOptio
     LocationHistory,
     Report,
     Notification,
+    AnalyticsEvent,
+    SecurityEvent,
+    ServerMetrics,
+    BlockedIP,
+    
   ],
   synchronize: configService.get('DB_SYNC') === 'true',
   logging: configService.get('DB_LOGGING') === 'true',

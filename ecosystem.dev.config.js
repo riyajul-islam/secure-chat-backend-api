@@ -8,6 +8,7 @@ module.exports = {
     watch_delay: 1000,
     env: {
       NODE_ENV: 'development',
+      TZ: 'Asia/Dhaka'
     },
     error_file: '/home/admin/domains/proappbackend.scratchwizard.net/logs/dev-err.log',
     out_file: '/home/admin/domains/proappbackend.scratchwizard.net/logs/dev-out.log',

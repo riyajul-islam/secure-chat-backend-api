@@ -21,6 +21,9 @@ import { ReportsModule } from './modules/reports/reports.module';
 import { AnnouncementsModule } from './modules/announcements/announcements.module';
 import { PopupsModule } from './modules/popups/popups.module';
 import { VerificationModule } from './modules/verification/verification.module';
+import { AccountingModule } from './modules/accounting/accounting.module';
+import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { TransactionsModule } from './modules/transactions/transactions.module';
 
 @Module({
   imports: [
@@ -30,7 +33,7 @@ import { VerificationModule } from './modules/verification/verification.module';
       envFilePath: '.env',
     }),
     
-    // Database Module
+    // Database Module - এখানে timezone already database.config.ts এ আছে
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -69,6 +72,9 @@ import { VerificationModule } from './modules/verification/verification.module';
     AnnouncementsModule,
     PopupsModule,
     VerificationModule,
+    AccountingModule,
+    AnalyticsModule,
+    TransactionsModule
   ],
   controllers: [RootController],
   providers: [],

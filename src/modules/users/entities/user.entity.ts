@@ -43,7 +43,7 @@ export class User {
   @Column({ default: false })
   verified: boolean;
 
-  @Column({ length: 20, default: 'pending' })
+  @Column({ length: 20, default: 'non-verified' })
   verification_status: string;
 
   @Column({ length: 20, default: 'Inactive' })

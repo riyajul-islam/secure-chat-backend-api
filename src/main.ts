@@ -8,6 +8,10 @@ import { json, urlencoded } from 'express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
+  // **এখানে Node.js process-এর time zone সেট করুন**
+  process.env.TZ = 'Asia/Dhaka';
+  console.log('✅ System Time Zone set to:', process.env.TZ);
+
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
   

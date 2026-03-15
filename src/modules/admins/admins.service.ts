@@ -5,7 +5,7 @@ import { Admin } from './entities/admin.entity';
 import { CreateAdminDto } from './dto/create-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 import { AdminLoginHistory } from './entities/admin-login-history.entity';
-import { Between, LessThan, MoreThan } from 'typeorm';
+import { Between, LessThan, MoreThan, IsNull } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -109,6 +109,23 @@ export class AdminsService {
       },
       order: { login_at: 'DESC' },
     });
+  }
+
+  async updateLastLogout(adminId: string): Promise<void> {
+    // Admin-এর last_logout field আপডেট করুন
+    await this.adminRepository.update(
+      { id: adminId },
+      { last_logout: new Date() }
+    );
+
+    // সর্বশেষ login history-র logout_at আপডেট করুন
+    await this.loginHistoryRepository.update(
+      { 
+        admin_id: adminId,
+        logout_at: IsNull()
+      },
+      { logout_at: new Date() }
+    );
   }
 
   // ---------- Admin Status Management ----------
